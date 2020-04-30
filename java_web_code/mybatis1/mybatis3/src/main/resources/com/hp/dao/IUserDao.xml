@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.dao.IUserDao">
+    <!--配置查询所有-->
+    <resultMap id="userMap" type="user">
+        <id property="userId" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="userAddress" column="address"></result>
+        <result property="userSex" column="sex"></result>
+        <result property="userBirthday" column="birthday"></result>
+    </resultMap>
+
+    <select id="findAll" resultMap="userMap">
+        select * from user;
+    </select>
+
+    <insert id="saveUser" parameterType="user">
+        <selectKey keyProperty="userId" keyColumn="id" resultType="int" order="AFTER">
+              SELECT last_insert_id();
+        </selectKey>
+              INSERT into user(username,address,sex,birthday)values(#{userName},#{userAddress},#{userSex},#{userBirthday});
+    </insert>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id =#{uid}
+    </delete>
+
+    <select id="findById" parameterType="INT" resultMap="userMap">
+        SELECT * from user where id =#{uid}
+    </select>
+
+    <select id="findByName" parameterType="string" resultMap="userMap">
+        SELECT * from user where username like #{name}
+    </select>
+
+    <select id="findTotal" resultType="int">
+        SELECT COUNT(id) from user;
+    </select>
+
+    <select id="findUserByVo" parameterType="com.hp.domain.QueryVo" resultMap="userMap">
+        SELECT * from user where username like #{user.userName}
+    </select>
+
+    <update id="updateUser" parameterType="USER">
+        update user set username=#{userName},address=#{userAddress},sex=#{userSex},birthday=#{userBirthday} where id=#{userId}
+    </update>
+    
+    <select id="findUserByCondition" resultMap="userMap" parameterType="user">
+        SELECT  * from user
+        <where>
+            <if test="userName != null">
+                and username=#{userName}
+            </if>
+            <if test="userSex != null">
+                   and sex = #{userSex}
+            </if>
+        </where>
+    </select>
+
+    <sql id="defaultUser">
+        select * from user
+    </sql>
+
+    <select id="findUserInIds" resultMap="userMap" parameterType="queryvo">
+        <include refid="defaultUser"></include>
+        <where>
+            <if test="ids != null and ids.size()>0">
+                <foreach collection="ids" open=" and id in (" close=")" item="uid" separator=",">
+                      #{uid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+</mapper>

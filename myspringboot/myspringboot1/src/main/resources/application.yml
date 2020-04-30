@@ -1,0 +1,24 @@
+name: zhangsan
+
+person: {name: zhangsan,age: 18,addr: beijing}
+
+city:
+  - beijing
+  - tianjin
+  - shanghai
+  - chongqing
+
+student:
+  - name: tom
+    age: 18
+    addr: beijing
+  - name: lucy
+    age: 17
+    addr: tianjin
+
+
+
+server:
+  port: 8081
+
+

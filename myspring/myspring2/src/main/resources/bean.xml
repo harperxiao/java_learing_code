@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService" class ="com.hp.service.impl.AccountServiceImpl">
+        <constructor-arg name="name" value="泰斯特"></constructor-arg>
+        <constructor-arg name="age" value="18"></constructor-arg>
+        <constructor-arg name="birthday" ref="now"></constructor-arg>
+    </bean>
+
+    <bean id="now" class="java.util.Date"></bean>
+
+    <bean id="accountService2" class ="com.hp.service.impl.AccountServiceImpl2">
+        <property name="name" value="TEST"></property>
+        <property name="age" value="21"></property>
+        <property name="birthday" ref="now"></property>
+    </bean>
+
+
+    <bean id="accountService3" class="com.hp.service.impl.AccountServiceImpl3">
+        <property name="myStrs">
+            <set>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </set>
+        </property>
+
+        <property name="myList">
+            <array>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </array>
+        </property>
+
+        <property name="mySet">
+            <list>
+                <value>AAA</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+
+        <property name="myMap">
+            <props>
+                <prop key="testC">ccc</prop>
+                <prop key="testD">ddd</prop>
+            </props>
+        </property>
+
+        <property name="myProps">
+            <map>
+                <entry key="testA" value="aaa"></entry>
+                <entry key="testB" value="bbb"></entry>
+            </map>
+        </property>
+    </bean>
+</beans>
